@@ -8,6 +8,4 @@ import com.phegion.cursomc.domain.Category;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer>{
 	
-	
-
 }
