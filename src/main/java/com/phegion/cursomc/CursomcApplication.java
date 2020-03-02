@@ -7,25 +7,41 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.phegion.cursomc.domain.Category;
-import com.phegion.cursomc.repositories.CategoryRepository;
+import com.phegion.cursomc.domain.Categoria;
+import com.phegion.cursomc.domain.Produto;
+import com.phegion.cursomc.repositories.CategoriaRepository;
+import com.phegion.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
-	
-	@Autowired
-	private CategoryRepository categoryRepository;
 
+	@Autowired
+	private CategoriaRepository categoriaRepository;
+	@Autowired
+	private ProdutoRepository produtoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		Category cat1 = new Category(null, "Informática");
-		Category cat2 = new Category(null, "Escritório");
 		
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
+		Categoria cat1 = new Categoria(null, "Informática");
+		Categoria cat2 = new Categoria(null, "Escritório");
+		
+		Produto p1 = new Produto(null, "Computador", 2000.00);
+		Produto p2 = new Produto(null, "Impressora", 800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
+		
+		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
+		cat2.getProdutos().addAll(Arrays.asList(p2));
+		
+		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
+		p3.getCategorias().addAll(Arrays.asList(cat1));
+
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 	}
 }
