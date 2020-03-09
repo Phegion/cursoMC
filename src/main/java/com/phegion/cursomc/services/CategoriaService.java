@@ -57,7 +57,7 @@ public class CategoriaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Categoria fromDTO(CategoriaDTO objDto) {
+	public Categoria fromDTO(CategoriaDTO objDto) {        //METODO AUXILIAR PARA CONVERTER UM OBJ DTO INSTANCIAR UMA ENTITY
 		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
