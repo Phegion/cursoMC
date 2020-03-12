@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.phegion.cursomc.domain.Categoria;
+import com.phegion.cursomc.domain.Cliente;
 import com.phegion.cursomc.dto.CategoriaDTO;
 import com.phegion.cursomc.repositories.CategoriaRepository;
 import com.phegion.cursomc.services.exception.DataIntegrityException;
@@ -34,8 +35,9 @@ public class CategoriaService {
 	}
 	
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -59,5 +61,9 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDto) {        //METODO AUXILIAR PARA CONVERTER UM OBJ DTO INSTANCIAR UMA ENTITY
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 }
